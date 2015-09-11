@@ -1,10 +1,13 @@
 
 ---
-- name: selenium_started
-  service: name=se_{{sel_role}} state=started enabled=yes
+- name: se_hub started
+  service: name=se_hub state=started
 
-- name: selenium_reload
-  service: name=se_{{sel_role}} state=reloaded
+- name: se_hub restarted
+  service: name=se_hub state=restarted
 
-- name: selenium_restarted
-  service: name=se_{{sel_role}} state=restarted
+- name: se_node started
+  service: name=se_node state=started
+
+- name: se_node restarted
+  service: name=se_node state=restarted

@@ -9,6 +9,14 @@
   sudo: False
   command: unzip -qt {{cur_dir}}/{{jar_file}}
 
+- name: Ensure Selenium group exists
+  group: name="{{ selenium_group }}" state=present
+  sudo: true
+
+- name: Ensure Selenium user exists
+  user: name="{{ selenium_user }}" group="{{ selenium_group }}" shell="/bin/bash" state=present
+  sudo: true
+
 - name: Copy selenium into place
   sudo: True
   copy: src={{jar_file}}  dest={{ selenium_dir }}/selenium-server.jar owner=root group=root mode=644
@@ -17,17 +25,21 @@
   sudo: True
   template: src=defaults.j2 dest=/etc/default/se_{{sel_role}} owner=root group=root mode=644
   tags: ['config']
-  notify: selenium_restarted
 
 - name: Install service file
   sudo: True
   template: src=redhat_init.j2 dest=/etc/init.d/se_{{sel_role}} owner=root group=root mode=755
   tags: ['config']
-  notify: selenium_restarted
 
 - name: Enable service
   sudo: True
-  service: name=se_{{sel_role}} enabled=yes state=started
+  service: name=se_node enabled=yes state=started
+  when: sel_role == 'node'
+
+- name: Enable service
+  sudo: True
+  service: name=se_hub enabled=yes state=started
+  when: sel_role == 'hub'
 
 - name: Install browser
   sudo: True
