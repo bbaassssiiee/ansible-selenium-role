@@ -15,3 +15,7 @@ hub: ''
 java_opts: ''
 extra_args: ''
 port: ''
+
+proxy_env:
+  zhttp_proxy: dummy
+  zhttps_proxy: dummy
