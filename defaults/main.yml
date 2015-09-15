@@ -1,6 +1,6 @@
 ---
 
-server_version_major: 2.47
+server_version_major: 2.45
 server_version: "{{server_version_major}}.0"
 download_server: "http://selenium-release.storage.googleapis.com/{{server_version_major}}"
 selenium_dir: /usr/local/lib/
